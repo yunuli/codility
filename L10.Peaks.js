@@ -12,13 +12,13 @@ function solution(A) {
     sum[0] = sum[1] = 0;
     let i = 1, gap = mingap = 1;
     while(i < len){
-        gap++;
+        // gap++;
         if(A[i] > A[i-1] && A[i] > A[i+1]){
             peaks[i] = true;
-            if(mingap < gap){
-                mingap = gap;
-                gap = 0;
-            }
+            // if(mingap < gap){
+            //     mingap = gap;
+            //     gap = 0;
+            // }
         }
         sum[i+1] = sum[i] + ~~peaks[i];
         i++;
