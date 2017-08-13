@@ -45,13 +45,32 @@
 
 let tester=require('./testFrame');
 
-function solution(){
+function solution(A){
+    let E = {}, R = {},len = A.length;
+    for(let i = 0; i < len; i++){
+        E[A[i]] = ~~E[A[i]] + 1;
+    }
+    for(let i in E){
+        i = parseInt(i);
+        for(let j = i; j <= 2*len; j+=i){
+            if(E[j])
+                R[j] = E[i] + ~~R[j];
+        }
+    }
+    // console.log(R);
+    
+    let results = [];
+    for (let i = 0; i < len; i++) {
+        results.push(len - ~~R[A[i]]);
 
+    }
+    return results;
 }
 
 let testcases=[
-    [3,1,2,3,6],
-    [2,3,5,7,11],
-    [4,4,4,4,4,4],
-    [3,9,27,81]
+    [[3,1,2,3,6]],
+    [[2,3,5,7,11]],
+    [[4,4,4,4,4,4]],
 ];
+
+tester.run(solution, testcases);
