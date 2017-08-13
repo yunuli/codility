@@ -2,7 +2,7 @@
 function run(solution, testcases){
     testcases.forEach(function(testcase, idx, timer){
         if(timer) console.time('case ' + idx);
-        let answer = solution(testcase);
+        let answer = solution.apply(this,testcase);
         if(timer) console.timeEnd('case '+idx);
         console.log('the answer for case %d is ', idx,answer);
     });
