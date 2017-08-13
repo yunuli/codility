@@ -1,21 +1,8 @@
 // you can write to stdout for debugging purposes, e.g.
 // console.log('this is a debug message');
-
+let tester=require('./testFrame');
 function solution(N) {
-    function primes(N){
-        let primes = [1,2];
-        for(let i = 3; i <= N; i+=2){
-            let j = 1, isPrime = true;
-            for(; j < primes.length && primes[j] <= Math.sqrt(i); j++){
-                if(i % primes[j] == 0){
-                    isPrime = false;
-                    break;
-                }
-            }
-            if(isPrime) primes.push(i);
-        }
-        return primes;
-    }
+
 
     let p = primes(Math.sqrt(N));
     //console.log(p);
@@ -24,3 +11,38 @@ function solution(N) {
     }
     // write your code in JavaScript (Node.js 6.4.0)
 }
+
+function primes(N){
+    let primes = [1,2];
+    for(let i = 3; i <= N; i+=2){
+        let j = 1, isPrime = true;
+        let sqrtI  = Math.sqrt(i);
+        for(; j < primes.length && primes[j] <= sqrtI ; j++){
+            if(i % primes[j] == 0){
+                isPrime = false;
+                break;
+            }
+        }
+        if(isPrime) primes.push(i);
+    }
+    return primes;
+}
+
+function sieveOfEratosthenes(N){
+    let numbers = new Array(N+1), primes=[];
+
+    for(let i = 2; i <= N; i++){
+        if(numbers[i] === undefined){
+            numbers[i] == true;
+            primes.push(i);
+            for(let j = i+i; j < N+1; j+=i){
+                numbers[j] = false;
+            }
+        }
+    }
+    return primes;
+}
+
+let testcases = [4];
+
+tester.run(sieveOfEratosthenes, testcases);
