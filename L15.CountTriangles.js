@@ -27,6 +27,12 @@
  each element of array A is an integer within the range [1..1,000,000,000].
 
  */
+/**
+ * Complexity:
+
+ expected worst-case time complexity is O(N2);
+ expected worst-case space complexity is O(N), beyond input storage (not counting the storage required for input arguments).
+ */
 let tester = require('./testFrame');
 function solution(A){
     let len = A.length;
