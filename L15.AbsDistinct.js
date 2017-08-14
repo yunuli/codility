@@ -32,3 +32,47 @@
  each element of array A is an integer within the range [−2,147,483,648..2,147,483,647];
  array A is sorted in non-decreasing order.
  */
+let tester = require('./testFrame');
+function solution(A){
+    // console.log('case is :',A);
+
+    let leftIndex = 0, rightIndex = A.length-1, pre = 0.5, count = 0;
+    while(leftIndex <= rightIndex){
+        let lvalue = -A[leftIndex], rvalue = A[rightIndex];
+        if( lvalue > rvalue){
+            if(lvalue !== pre){
+                pre = lvalue;
+                count++;
+            }
+            leftIndex++;
+        }else{
+            if(rvalue !== pre){
+                pre = rvalue;
+                count++;
+            }
+            rightIndex--;
+        }
+    }
+
+    return count;
+}
+
+let testcases = [
+    [[-5,-3,-1,0,3,6]],
+    [[-5,-5,-3,-1,0,0,3,6]],
+    [[1,2,3,4,5]],
+    [[-6,-5,-4,-3]],
+    [[-2147483648,-2147483647]],
+    [[-1,-1,-1,-1]],
+    [[0,0,0,0,0]],
+    [[1,1,1,1,1]],
+    [[-5,-3,-3,-1,-1,0,0,]],
+    [[0,0,1,1,2,3,4]],
+    [[5,5,5,5,5]],
+    [[4]],
+    [[-5,-5,0,0,3,3]],
+    [[-5,-5,0,0,5,5]],
+    [[-5,-5,5,5]],
+    [[4,4,5,5]],
+];
+tester.run(solution,testcases);

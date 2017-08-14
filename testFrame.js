@@ -2,6 +2,8 @@
 function run(solution, testcases){
     console.time('total');
     testcases.forEach(function(testcase, idx, timer){
+        console.log('case %d start:----------------', idx);
+
         if(timer) console.time('case ' + idx);
         let answer = solution.apply(this,testcase);
         if(timer) console.timeEnd('case '+idx);
