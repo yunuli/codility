@@ -36,3 +36,44 @@
  M is an integer within the range [0..100,000];
  each element of array A is an integer within the range [0..M].
  */
+let tester = require('./testFrame');
+
+function solution(M,A){
+    let map = new Array(M+1), len = A.length;
+    for (let i = 0; i < map.length; i++) {
+        map[i] = 0;
+    }
+    let right=1,count=0,duplicates=0;
+
+    for(let left = 0; left < len; left++){
+        let tmp = map[A[left]]++;
+        if(tmp > 1){
+            duplicates++;
+        }
+
+        while(duplicates === 0){
+            while(right < len){
+                tmp = map[A[right]]++;
+                if(tmp === 1){
+                    right++;
+                }else{
+                    duplicates++;
+                    break;
+                }
+            }
+        }
+
+        tmp = map[A[left]]--;
+        if(tmp ===1){
+            duplicates--;
+        }
+
+    }
+}
+let testcases = [
+    [5,[3,4,5,2]],
+    [[]],
+    [[]]
+];
+
+tester.run(solution,testcases);
