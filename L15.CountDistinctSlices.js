@@ -49,32 +49,24 @@ function factorial(n) {
 //todo . it takes me a long time to get it correct. need practice more.
 function solution(M, A) {
 
-    let map = new Array(M + 1), len = A.length;
+    let map = new Array(M + 1), len = A.length, count = 0, hasDuplicate = false, right = -1;
     for (let i = 0; i < map.length; i++) {
         map[i] = 0;
     }
-    let left = 0, right = -1, preright = right, count = 0, hasDuplicates = false;
-    while (left < len && right < len) {
-        while (!hasDuplicates && ++right < len) {
+
+    for (let left = 0; left < len; left++) {
+        while (!hasDuplicate && right < len) {
+            right++;
             if (++map[A[right]] > 1) {
-                hasDuplicates = true;
+                hasDuplicate = true;
             }
         }
-        count += (right - left) * (right - left + 1) / 2;
+        count += right - left;
 
-        if (left < preright) {
-            count -= (preright - left) * (preright - left + 1) / 2;
+        if (--map[A[left]] === 1) {
+            hasDuplicate = false;
         }
-        preright = right;
 
-        if (count > 1000000000) return 1000000000;
-
-        while (hasDuplicates) {
-            if (--map[A[left]] === 1) {
-                hasDuplicates = false;
-            }
-            left++;
-        }
     }
     return count;
 }
