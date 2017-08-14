@@ -27,3 +27,37 @@
  each element of array A is an integer within the range [1..1,000,000,000].
 
  */
+let tester = require('./testFrame');
+function solution(A){
+    let len = A.length;
+    if(len < 3) return 0;
+    A.sort((a,b) => a-b);
+    // console.log(A);
+    console.time('loop');
+    let count = 0;
+    for(let side1 = 0; side1 < len-2; side1++){
+        let side2, side3;
+        for(side3 = side2 = side1 + 1; side2 < len-1; side2++){
+            while(side3 + 1 < len && A[side1]+A[side2] > A[side3+1]){
+                side3++;
+            }
+            count += (side3 - side2);
+        }
+    }
+    console.timeEnd('loop');
+    return count;
+}
+
+let testcases = [
+    [[10,2,5,1,8,12]],
+    [function(){
+        let a = [];
+        for (let i = 1; i <= 1000; i++) {
+            a.push(i);
+        }
+        return a;
+    }()]
+    // [[]],
+    // [[]],
+    ];
+tester.run(solution, testcases);
