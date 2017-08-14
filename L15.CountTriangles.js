@@ -39,18 +39,27 @@ function solution(A){
     if(len < 3) return 0;
     A.sort((a,b) => a-b);
     // console.log(A);
+    let maxStride = new Array(len);
     console.time('loop');
-    let count = 0;
+    let count = 0,lp=0;
+    maxStride[1]=2;
     for(let side1 = 0; side1 < len-2; side1++){
-        let side2, side3;
-        for(side3 = side2 = side1 + 1; side2 < len-1; side2++){
-            while(side3 + 1 < len && A[side1]+A[side2] > A[side3+1]){
+        let side2=side1+1;
+        // let side3=side1+2;
+        // todo remember :using maxStride when big N( > 5000) helps, small N(1-100) does not
+        let side3=maxStride[side2];
+        for(; side2 < len-1; side2++){
+            while(side3 < len && A[side1]+A[side2] > A[side3]){
                 side3++;
+                lp++;
             }
-            count += (side3 - side2);
+            maxStride[side2] = side3;
+            count += (side3 - side2 -1);
         }
     }
     console.timeEnd('loop');
+    console.log('lp',lp);
+    
     return count;
 }
 
@@ -58,7 +67,7 @@ let testcases = [
     [[10,2,5,1,8,12]],
     [function(){
         let a = [];
-        for (let i = 1; i <= 1000; i++) {
+        for (let i = 1; i <= 5000; i++) {
             a.push(i);
         }
         return a;
