@@ -37,71 +37,56 @@
  each element of array A is an integer within the range [0..M].
  */
 let tester = require('./testFrame');
-function factorial(n){
+
+function factorial(n) {
     let product = 1;
-    for(let i = 1; i <= n; i++){
+    for (let i = 1; i <= n; i++) {
         product *= i;
     }
     return product;
 }
-function solution(M,A){
-    console.log(A);
 
-    let map = new Array(M+1), len = A.length;
+//todo . it takes me a long time to get it correct. need practice more.
+function solution(M, A) {
+
+    let map = new Array(M + 1), len = A.length;
     for (let i = 0; i < map.length; i++) {
         map[i] = 0;
     }
-    let left = 0,right=-1, count=0, duplicates=false;
-    let preleft = left, preright = right;
-    while(left < len && right < len){
-        let tmp;
-        // console.log('left,right:',left,right);
-
-        while(!duplicates && ++right < len){
-            tmp = ++map[A[right]];
-            if(tmp > 1){
-                duplicates=true;
+    let left = 0, right = -1, preright = right, count = 0, hasDuplicates = false;
+    while (left < len && right < len) {
+        while (!hasDuplicates && ++right < len) {
+            if (++map[A[right]] > 1) {
+                hasDuplicates = true;
             }
         }
-
-        console.log('mp',map.slice(0,10));
-
-
         count += (right - left) * (right - left + 1) / 2;
-        console.log('count1:',count);
 
-        if(left < preright){
-            count -= (preright-left) * (preright-left + 1) /2;
+        if (left < preright) {
+            count -= (preright - left) * (preright - left + 1) / 2;
         }
-        console.log('count2:',count);
-        preleft = left, preright = right;
+        preright = right;
 
-        if(count > 1000000000) return 1000000000;
-        // console.log(count, left, right);
+        if (count > 1000000000) return 1000000000;
 
-        while(duplicates){
-            tmp = --map[A[left]];
-            if(tmp ===1){
-                duplicates=false;
+        while (hasDuplicates) {
+            if (--map[A[left]] === 1) {
+                hasDuplicates = false;
             }
             left++;
         }
-        console.log('mp after',map.slice(0,10));
-
-        // console.log('left:',left);
-
     }
     return count;
-
 }
+
 let testcases = [
-    [10000,[ 1, 3, 4, 1, 2, 1, 3, 2, 1 ]],
-    [5,[3,4,5,5,2]],
-    [6,[3,4,5,5,2]],
-    [5,[1,1,2,2,3,3]],
+    [10000, [1, 3, 4, 1, 2, 1, 3, 2, 1]],
+    [5, [3, 4, 5, 5, 2]],
+    [6, [3, 4, 5, 5, 2]],
+    [5, [1, 1, 2, 2, 3, 3]],
     // ,
-    [10,[1,1,1,1,1,1,1,1]],
-    [10,[1,2,3,4,5,6,7]]
+    [10, [1, 1, 1, 1, 1, 1, 1, 1]],
+    [10, [1, 2, 3, 4, 5, 6, 7]]
     // ,
     // [10,function(){
     //     let a = [];
@@ -115,4 +100,4 @@ let testcases = [
     // [[]]
 ];
 
-tester.run(solution,testcases);
+tester.run(solution, testcases);
