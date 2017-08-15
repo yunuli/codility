@@ -14,8 +14,6 @@
  A[4] = 9    B[4] = 10
  The segments are shown in the figure below.
 
-
-
  The size of a non-overlapping set containing a maximal number of segments is 3. For example, possible sets are {0, 2, 3}, {0, 2, 4}, {1, 2, 3} or {1, 2, 4}. There is no non-overlapping set with four segments.
 
  Write a function:
@@ -32,3 +30,41 @@
  A[I] ≤ B[I], for each I (0 ≤ I < N);
  B[K] ≤ B[K + 1], for each K (0 ≤ K < N − 1).
  */
+//1
+let tester = require('./testFrame');
+
+function solution(A, B){
+    let len = A.length,count = 1;
+    if(len === 0) return 0;
+    let curRightEdge = B[0],nextPos = 1, nextRightEdge, nextMinLeftEdge;
+    while(nextPos < len && curRightEdge === B[nextPos]){
+        nextPos++;
+    }
+
+    while(nextPos < len){
+        nextRightEdge = B[nextPos];
+        nextMinLeftEdge = A[nextPos];
+        nextPos++;
+        while(nextPos < len && nextRightEdge === B[nextPos]){
+            if(A[nextPos] > nextMinLeftEdge){
+                nextMinLeftEdge = A[nextPos];
+            }
+            nextPos++;
+        }
+        if(nextMinLeftEdge > curRightEdge){
+            count++;
+            curRightEdge = nextRightEdge;
+        }
+    }
+    return count;
+}
+let testcases = [
+    [[1, 3, 7, 9, 9],
+        [5, 6, 8, 9, 10]],
+    [[1, 1, 2, 6, 4, 7, 9, 10],
+        [3, 4, 4, 8, 8, 9, 9, 10]],
+    [[1, 2, 1, 3, 2, 1, 4, 3, 2, 1],
+        [1, 2, 2, 3, 3, 3, 4, 4, 4, 4]]
+
+];
+tester.run(solution, testcases);
