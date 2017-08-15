@@ -46,3 +46,45 @@
  K is an integer within the range [1..1,000,000,000];
  each element of array A is an integer within the range [1..1,000,000,000].
  */
+
+let tester = require('./testFrame');
+
+function solution(A, K){
+    let len = A.length, accLen = 0, count = 0;
+
+    for(let i = 0; i < len; i++){
+        accLen+= A[i];
+        if(accLen >= K){
+            count++;
+            accLen = 0;
+        }
+    }
+    return accLen;
+}
+
+let testcases = [
+    [function(){
+        let a = [];
+        for (let i = 0; i < 10; i++) {
+            let odd = (i & 0x01),sign = 1;
+            if(odd) sign = -1;
+            a[i] = i*sign;
+        }
+        return a;
+    }()],
+    [[1]],//2
+    [[-8,4,5,-10,3]],//3
+    [[1,9,3,6,4,0,2,8,0]],//0
+    [[-1,-8,0,-3,0,-9,-3,]],//0
+    [[-1,-8,7,4,3,-3,]],//0
+    [[-1,-8,0,7,4,3,-3,]],//0
+    [[-1,-8,-3,0,-9,-3,]],//0
+    [[0,1,3,5,7,9]],//0
+    [[-1,-8,0,7,4,-9,-3,]],//0
+    [[1,3,5,7,9]],//2
+    [[-1,-8,-3,-9,-3,]],//2
+    [[-1,-8,0,7,4,0,-9,-3,]],//0
+    [[-1,-8,7,4,13,-3,]]//1
+
+];
+tester.run(solution, testcases);
