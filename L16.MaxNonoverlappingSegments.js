@@ -33,31 +33,26 @@
 //1
 let tester = require('./testFrame');
 
-function solution(A, B){
-    let len = A.length,count = 1;
-    if(len === 0) return 0;
-    let curRightEdge = B[0],nextPos = 1, nextRightEdge, nextMinLeftEdge;
-    while(nextPos < len && curRightEdge === B[nextPos]){
-        nextPos++;
-    }
-
-    while(nextPos < len){
-        nextRightEdge = B[nextPos];
-        nextMinLeftEdge = A[nextPos];
-        nextPos++;
-        while(nextPos < len && nextRightEdge === B[nextPos]){
-            if(A[nextPos] > nextMinLeftEdge){
-                nextMinLeftEdge = A[nextPos];
+function solution(leftEdges, rightEdges) {
+    let len = leftEdges.length, count = 0;
+    if (len === 0) return 0;
+    let prevRightEdge = -1, curPos = 0, curRightEdge = rightEdges[curPos], curMaxLeftEdge = -1;
+    while (curPos < len) {
+        while (curPos < len && curRightEdge === rightEdges[curPos]) {
+            if (leftEdges[curPos] > curMaxLeftEdge) {
+                curMaxLeftEdge = leftEdges[curPos];
             }
-            nextPos++;
+            curPos++;
         }
-        if(nextMinLeftEdge > curRightEdge){
+        if (curMaxLeftEdge > prevRightEdge) {
             count++;
-            curRightEdge = nextRightEdge;
+            prevRightEdge = curRightEdge;
         }
+        curRightEdge = rightEdges[curPos];
     }
     return count;
 }
+
 let testcases = [
     [[1, 3, 7, 9, 9],
         [5, 6, 8, 9, 10]],
