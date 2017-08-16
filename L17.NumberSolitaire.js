@@ -43,3 +43,52 @@
  N is an integer within the range [2..100,000];
  each element of array A is an integer within the range [−10,000..10,000].
  */
+
+let tester = require('./testFrame');
+
+function solution(A) {
+    let len = A.length, sum = new Array(len);
+    // console.log('b4', A);
+
+    // let cur = 0, next = 1;
+    // while (next < len - 1) {
+    //     while (next < len -1 && A[next] >= 0) {
+    //         A[cur] += A[next++];
+    //     }
+    //     cur++;
+    //
+    //     let count = 0;
+    //     while (next < len - 1 && A[next] < 0) {
+    //         count++;
+    //         next++;
+    //     }
+    //
+    //     if (count > 6) {
+    //         cur = next++;
+    //     } else {
+    //         A[cur] = A[next];
+    //     }
+    // }
+    // A[++cur] = A[len - 1];
+    sum[0] = A[0];
+    for (let i = 1; i <len; i++) {
+        let tmp, max = -1e11;
+        for (let d = 1; d <= 6; d++) {
+            if (i - d >= 0) {
+                tmp = sum[i - d] + A[i];
+                max = tmp < max ? max : tmp;
+            }
+        }
+        sum[i] = max;
+    }
+
+    return sum[len-1];
+}
+
+let testcases = [
+    [[1, -2, 0, 9, -1, -2]],//8
+    [[1, 2, 3, 4, 5, 6, 7]],//28
+    [[-1, -1, -1, -1]],//-2
+    [[-1, -2, -3, -4, -5, -6, -7, -8]]//-11
+];
+tester.run(solution, testcases);
