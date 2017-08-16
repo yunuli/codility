@@ -48,27 +48,32 @@ let tester = require('./testFrame');
 
 function solution(A) {
     let len = A.length, sum = new Array(len);
-    // console.log('b4', A);
+    console.log('b4', A);
 
+    //todo try to shorten the array, consecutive positives add up to one, negatives less than 6 could be jump over
     // let cur = 0, next = 1;
-    // while (next < len - 1) {
+    // while (next < len-1) {
     //     while (next < len -1 && A[next] >= 0) {
     //         A[cur] += A[next++];
-    //     }
-    //     cur++;
+    //     }//now next is last or at first negative
+    //     console.log('mid', A,cur, next);
     //
+    //     if(next === len-1) break;
     //     let count = 0;
     //     while (next < len - 1 && A[next] < 0) {
     //         count++;
     //         next++;
-    //     }
-    //
-    //     if (count > 6) {
-    //         cur = next++;
+    //     }//now next is > 0 or is last
+    //     if (count > 5) {
+    //         cur = next;//greater than 5 consecutive negatives, can not ignore, cur got the first non negative
     //     } else {
-    //         A[cur] = A[next];
+    //         A[++cur] = A[next++]; //
     //     }
+    //     console.log('mid2', A,cur, next);
     // }
+    // A[++cur]  = A[len -1];
+    // console.log('final',cur, A);
+
     // A[++cur] = A[len - 1];
     sum[0] = A[0];
     for (let i = 1; i <len; i++) {
@@ -81,14 +86,69 @@ function solution(A) {
         }
         sum[i] = max;
     }
+    // console.log('sum',sum);
 
     return sum[len-1];
 }
 
 let testcases = [
+    [[ 1, -2 ]],//-1
+    [[-100,100]],//0
+    [[ -3, -4, -3, 2, -7, -1 ]],//-2
+    [[ 1, -2, 4, 3, -1, -3, -7, 4, -9 ]],//3
     [[1, -2, 0, 9, -1, -2]],//8
     [[1, 2, 3, 4, 5, 6, 7]],//28
     [[-1, -1, -1, -1]],//-2
-    [[-1, -2, -3, -4, -5, -6, -7, -8]]//-11
+    [[-1, -2, -3, -4, -5, -6, -7, -8]],//-11,
+    [[ -4820,
+        3705,
+        3682,
+        6987,
+        -6286,
+        -5389,
+        -7057,
+        -5497,
+        4681,
+        -7396,
+        626,
+        -5722,
+        -4107,
+        -1368,
+        6753,
+        2168,
+        -9712,
+        -4483,
+        -7066,
+        7426,
+        6195,
+        6121,
+        6528,
+        4895,
+        8987,
+        5876,
+        -4866,
+        6999,
+        -264,
+        5100,
+        1283,
+        -1409,
+        -2716,
+        -1404,
+        -3725,
+        -7653,
+        6393,
+        5965,
+        9714,
+        3819,
+        1085,
+        4968,
+        -7303,
+        3537,
+        -1132,
+        -6468,
+        -5948,
+        454,
+        -4934,
+        -811 ]]//118316
 ];
 tester.run(solution, testcases);
