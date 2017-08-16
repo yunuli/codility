@@ -45,12 +45,12 @@ let tester = require('./testFrame');
 
 function bsearch(A, n, left, right){
 
-    if(left === right ) return left;
+    if(left == right ) return left;
     let mid = Math.floor((left+right) / 2);
     console.log(mid);
     if(A[mid] === n) return mid;
     if(A[mid] > n){
-        return bsearch(A, n, left, mid);
+        return bsearch(A, n, left, right-1);
     }else{
         return bsearch(A, n, mid+1, right);
     }
@@ -66,7 +66,7 @@ function solution(A){
     if(len === 1) return 2*abs(A[0]);
 
     A.sort((a,b) => a-b);
-    console.log(A);
+    // console.log(A);
 
     let left, right;
     // while(right < len-1 && (A[right] < 0 || A[right + 1] <= 0)){
@@ -99,26 +99,29 @@ function solution(A){
 let testcases = [
     [function(){
         let a = [];
-        for (let i = 0; i < 10; i++) {
-            let odd = (i & 0x01),sign = 1;
-            if(odd) sign = -1;
-            a[i] = i*sign;
+        for (let i = 0; i < 100000; i++) {
+            a[i] = i;
         }
         return a;
-    }()],
-    [[1]],//2
-    [[-8,4,5,-10,3]],//3
-    [[1,9,3,6,4,0,2,8,0]],//0
-    [[-1,-8,0,-3,0,-9,-3,]],//0
-    [[-1,-8,7,4,3,-3,]],//0
-    [[-1,-8,0,7,4,3,-3,]],//0
-    [[-1,-8,-3,0,-9,-3,]],//0
-    [[0,1,3,5,7,9]],//0
-    [[-1,-8,0,7,4,-9,-3,]],//0
-    [[1,3,5,7,9]],//2
-    [[-1,-8,-3,-9,-3,]],//2
-    [[-1,-8,0,7,4,0,-9,-3,]],//0
-    [[-1,-8,7,4,13,-3,]]//1
-
+    }()]
+    // [[1]],//2
+    // [[-8,4,5,-10,3]],//3
+    // [[1,9,3,6,4,0,2,8,0]],//0
+    // [[-1,-8,0,-3,0,-9,-3,]],//0
+    // [[-1,-8,7,4,3,-3,]],//0
+    // [[-1,-8,0,7,4,3,-3,]],//0
+    // [[-1,-8,-3,0,-9,-3,]],//0
+    // [[0,1,3,5,7,9]],//0
+    // [[-1,-8,0,7,4,-9,-3,]],//0
+    // [[1,3,5,7,9]],//2
+    // [[-1,-8,-3,-9,-3,]],//2
+    // [[-1,-8,0,7,4,0,-9,-3,]],//0
+    // [[-1,-8,7,4,13,-3,]]//1
+    // [],
+    // []
+    // ,
+    // []
+    // ,
+    // []
 ];
 tester.run(solution, testcases);
