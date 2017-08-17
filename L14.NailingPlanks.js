@@ -61,66 +61,54 @@
 let tester = require('./testFrame');
 
 //todo . it takes me a long time to get it correct. need practice more.
-function bsearch(A, x){
 
-    let left = 0, right = A.length-1, result = -1;
-
-    while(left <= right){
-        let mid = Math.floor((left + right) / 2);
-        // console.log(mid);
-
-        if(A[mid].position <= x){
-            left = mid+1;
-            result = mid;
-
-        }else{
-            right = mid -1;
-        }
-    }
-    return result === -1 ? left : result;
-}
-function search(A, toFind) {
-    console.log('begin---');
-
-    return bsearch(A,0,A.length, toFind);
+function half(a, b) {
+    return Math.floor((a + b) / 2);
 }
 
-function solution(lefts, rights, nails) {
-    for(let i = 0; i < nails.length; i++){
-        nails[i] = {index : i + 1, position:nails[i]};
-    }
-    nails.sort((a,b)=> a.position - b.position);
-    let max = 0;
-    console.log(nails);
-
-    for(let i = 0; i < lefts.length; i++){
-        let left = bsearch(nails, lefts[i]), right = bsearch(nails, rights[i]);
-        console.log('nails indexes:',left, right, 'plank side value', lefts[i],rights[i]);
-        let min = 30001;
-        if(left===right && (nails[left].position < lefts[i] || nails[left].position > rights[i])) return -1;
-        for(let j = left; j <= right; j++){
-            if(nails[j].position >= lefts[i] && nails[j].position <= rights[i] && min > nails[j].index){
-                min = nails[j].index;
-            }
-            console.log('min', min);
-
+function solution(A, B, C) {
+    let begin = 1, end = C.length, result = -1, stickNumber;
+    while (begin <= end) {
+        stickNumber = half(begin, end);
+        if (checkCoverage(A, B, C, stickNumber)) {
+            end = stickNumber - 1;
+            result = stickNumber;
+        } else {
+            begin = stickNumber + 1;
         }
-        if(max < min) max = min;
-        console.log('max',max);
-
     }
-    return max;
+    return result;
+}
 
+function checkCoverage(A, B, C, stickNumber) {
+    let axis = new Array(2 * C.length + 1), prefixSum = new Array(2 * C.length + 1);
+    for (let i = 0; i < axis.length; i++) {
+        axis[i] = 0;
+    }
+    for (let i = 0; i < stickNumber; i++) {
+        axis[C[i]]++;
+    }
+    prefixSum[0] = 0;
+    for (let i = 1; i < axis.length; i++) {
+        prefixSum[i] = axis[i] + prefixSum[i - 1];
+    }
+    for (let i = 0; i < A.length; i++) {
+        if (prefixSum[B[i]] - prefixSum[A[i] - 1] === 0) {
+            return false;
+        }
+    }
+    return true;
 }
 
 let testcases = [
-    [[1],[2],[3]],//-1
-    [[1],[2],[2]],//1
-    [[1],[2],[1]],//1
-    [[0],[3],[1,1]],//1
-    [[0],[1],[1,1]],//1
-    [[1,4,5,8],[4,5,9,10],[4,6,7,10,2]],//4
-    [[1,4,5,8],[4,5,9,10],[1,1]]//-1
+    [[1], [2], [3]],//-1
+    [[1], [2], [2]],//1
+    [[1], [2], [1]],//1
+    [[0], [3], [1, 1]],//1
+    [[0], [1], [1, 1]],//1
+    [[1, 4, 5, 8], [4, 5, 9, 10], [4, 6, 7, 10, 2]],//4
+    [[1, 4, 5, 8], [4, 5, 9, 10], [1, 1]],//-1,
+    [[1, 3], [5, 7], [6, 2, 4]]//
 
 
 ];
