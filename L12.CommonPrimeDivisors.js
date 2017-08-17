@@ -38,11 +38,7 @@ function getGcd(a, b) {
 }
 
 function gcdwrapper(a,b){
-    if (a < b) {
-        let tmp = a;
-        a = b;
-        b = tmp;
-    }
+
 
     return getGcd(a,b);
 }
@@ -52,18 +48,17 @@ function solution(A, B) {
     let len = A.length, count = 0;
 
     for (let i = 0; i < len; i++) {
-        let commonPrimeDivisors = gcdwrapper(A[i], B[i]),
+        let commonPrimeDivisors = getGcd(A[i], B[i]),
             //todo divide first to avoid big number numerical problem
             a = A[i] / commonPrimeDivisors,
             b = B[i] / commonPrimeDivisors,
             quotient = a * b;
 
-        let gcd = gcdwrapper(commonPrimeDivisors, quotient);
-        while (gcd !== 1) {
+        let gcd;
+        while ((gcd  = getGcd(commonPrimeDivisors, quotient)) > 1) {
             while (quotient % gcd === 0) {
                 quotient /= gcd;
             }
-            gcd = gcdwrapper(commonPrimeDivisors, quotient);
         }
 
         if (quotient === 1) count++;
@@ -488,4 +483,3 @@ let testcases = [
     ]
 ];
 tester.run(solution, testcases);
-172627169288904
