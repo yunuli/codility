@@ -4,4 +4,8 @@ let tester = require('./testFrame');
  function solution(N, M) { 
     if(N % M === 0) return N/M; 
     return solution(M, N%M) * N/M; 
-}   let testcases = [   [10,4],   [10,2],   [10,3] //  , //  [], //  [], //  [], //  //[415633212 ,234332], //  [ //    1000000000 ,1000000000 //  ] ];  tester.run(solution, testcases);
+}   let testcases = [   [10,4],   [10,2],   [10,3]
+ ,   [],   [], [], [415633212 ,234332], 
+    [     1000000000 ,1000000000  ] ];
+  tester.run(solution, testcases);
+
