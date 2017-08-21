@@ -22,3 +22,24 @@
  In your solution, focus on correctness. The performance of your solution will not be the focus of the assessment.
  Copyright 2009–2017 by Codility Limited. All Rights Reserved. Unauthorized copying, publication or disclosure prohibited.
  */
+
+function solution(S) {
+
+    let maxLength = -1;
+    S.split(' ').forEach(function (password) {
+        if (/^[a-zA-Z0-9]+$/.test(password)) {
+            let digits = password.match(/\d+/g), digitsLength = 0;
+            if (digits)
+                digitsLength = digits.reduce(function (pre, cur) {
+                    return pre + cur.length;
+                }, 0);
+            if (digitsLength % 2 === 1 && (password.length - digitsLength) % 2 === 0 && maxLength < password.length) {
+                maxLength = password.length;
+            }
+        }
+    });
+
+    return maxLength;
+}
+
+console.log(solution(' vv 2another-word-with-special-characters correctAnswerr13579 always_bad_answer!'));

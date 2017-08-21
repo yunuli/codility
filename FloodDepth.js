@@ -48,3 +48,79 @@
  expected worst-case space complexity is O(N), beyond input storage (not counting the storage required for input arguments).
  Elements of input arrays can be modified.
  **/
+
+let tester = require('./testFrame');
+
+function Stack() {
+    let stk = [];
+    this.top = function () {
+        return stk[stk.length - 1];
+    };
+
+    this.pop = function () {
+        return stk.pop();
+    };
+
+    this.push = function (element) {
+        stk.push(element);
+    };
+    this.isEmpty = function isEmpty() {
+        return stk.length === 0;
+    };
+
+    this.isNotEmpty = function () {
+        return !this.isEmpty();
+    };
+    this.display = function (){
+        console.log(stk);
+    }
+}
+
+function solution(A) {
+    let len = A.length, minHeight = A[0], maxDepth = 0, stack = new Stack();
+    let curHeight;
+
+    for (let i = 0; i < len; i++) {
+        curHeight = A[i];
+        if (minHeight > curHeight) minHeight = curHeight;
+        if ((stack.isEmpty() || curHeight <= stack.top())) {
+            stack.push(curHeight);
+        } else {
+            let top;
+
+            while (stack.isNotEmpty() && stack.top() <= curHeight) {
+                top = stack.pop();
+            }
+            // stack.display();
+            if (stack.isEmpty()) { //leftmost side is the lower side
+                if (maxDepth < top - minHeight) {
+                    maxDepth = top - minHeight;
+                }
+                minHeight = curHeight;
+            } else if (maxDepth < curHeight - minHeight) {
+                maxDepth = curHeight - minHeight;
+            }
+
+            stack.push(curHeight);
+            // stack.display();
+        }
+    }
+    return maxDepth;
+
+}
+
+let testcases = [
+    [[1,3,2,1,2,1,5,3,3,4,2]],//2
+    [[50,9,8,7,6,7,8,9,1,6]],//5
+    [[11,9,8,7,6,7,20,9,1,6]],//5
+    [[11,9,8,7,6,7,20,9,1,30]],//19
+    [[50,9,8,7,6,7,8,9,1,6,20]],//19
+    [[50,9,8,7,6,7,8,9,1,6]],//5
+    [[10,9,8,7,6,7,8,9]],//3
+    [[5,10,9,8,7,6,7,8,9,8]],//3
+    [[10,9,8,7,6]],//0
+    [[6,7,8,9]],//0
+    [[6,7,8,9,8,7]],//0
+    [[6,6,6,6,6]]//0
+];
+tester.run(solution, testcases);
