@@ -69,7 +69,7 @@ function Stack() {
     };
 
     this.isNotEmpty = function () {
-        return !this.isEmpty();
+        return stk.length !== 0;
     };
     this.display = function (){
         console.log(stk);
