@@ -53,3 +53,88 @@
  expected worst-case time complexity is O(N*log(N));
  expected worst-case space complexity is O(N), beyond input storage (not counting the storage required for input arguments).
  Elements of input arrays can be modified.*/
+"use strict";
+
+let tester = require('./testFrame');
+function showSlalom(A){
+    let s = "一一一一一一一一一一一一一一一一一一一一";
+    for(let i = 0; i < A.length; i++){
+        console.log(s.slice(0, A[i]-1) + '*' + s.slice(A[i]-1));
+    }
+}
+
+function randomGenerator(){
+    let n = ~~(Math.random() * 19) + 2, A = new Array(n);
+    for (let i = 0; i < n; i++) {
+        A[i] = i + 1;
+    }
+    A.sort(()=> Math.random() > 0.5);
+    return A;
+}
+
+function solution(A, mt) {
+    showSlalom(A);
+    let len = A.length, maxTurns = mt || 2, turn = 0, max = 1, sum = new Array(len);
+
+    function init() {
+        for (let i = 0; i < len; i++) {
+            sum[i] = 1;
+        }
+    }
+
+    function findMaxGate(curHeight, direction) {
+
+        let curPosition = A[curHeight],
+            findPrevFunctions = [
+                function (cur, item) {
+                    return cur < item;
+                },
+                function (cur, item) {
+                    return cur > item;
+                }
+            ],
+            findPrev = findPrevFunctions[direction];
+
+        for (let upperHeight = curHeight - 1; upperHeight > -1; upperHeight--) {
+            if (findPrev(curPosition, A[upperHeight])) {
+                if (sum[upperHeight] >= sum[curHeight]) {
+                    sum[curHeight] = sum[upperHeight] + 1;
+                    if(sum[curHeight] > max) max = sum[curHeight];
+                }
+            }
+        }
+    }
+
+    function run() {
+
+        init();
+        while (turn <= maxTurns) {
+            // console.log(sum);
+
+            let direction = (turn + 1) & 1;
+
+            for (let curHeight = 0; curHeight < len; curHeight++) {
+                findMaxGate(curHeight, direction);
+            }
+            console.log(sum);
+            turn++;
+        }
+
+        return max;
+    }
+
+    return run();
+}
+
+let testcases = [
+    [randomGenerator()],
+    // [[7, 5, 3], 1],//2
+    // [[1, 5, 3], 1],//3
+    // [[1, 2, 3, 4, 5, 6, 7]],//7
+    // [[15, 13, 5, 7, 4, 10, 12, 8, 2, 11, 6, 9, 3]],//8
+    // [[7, 6, 5, 4, 3, 2, 1]],//7
+    // [[7]],//1
+    // [[1, 5]]//2
+];
+tester.run(solution, testcases);
+
