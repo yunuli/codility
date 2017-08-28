@@ -27,7 +27,6 @@
  A[5] = 6    B[5] = 3
  A[6] = 7    B[6] = 5
 
-
  the function should return "18" since the Elves can destroy bridges 1−3 and 3−5 (marked as dashed lines in the image above). The created areas consist of 3, 3 and 2 guard posts.
 
  Therefore, the result is 3 * 3 * 2 = 18. It is not possible to obtain a better result.

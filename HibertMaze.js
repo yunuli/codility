@@ -5,17 +5,11 @@
 
  The mazes of sizes N = 1 and N = 2 are presented in the pictures below:
 
-
-
  A maze of size N is constructed recursively from the layout of the maze of size N−1 (like the Hilbert curve). It contains four mazes of size N−1, each maze in one quarter. The maze in the bottom-left quarter is rotated by 90 degrees clockwise and the maze in the bottom-right quarter is rotated by 90 degrees counter-clockwise. The mazes in the top quarters are not rotated. There are three additional rocks (squares marked in green in the picture below) in the areas where the mazes intersect. The construction of the maze of size N = 3 is shown below:
-
-
 
  The halfling would like to reach the treasure in the smallest number of steps possible. At each step, he can move to any one of the four adjacent cells (north, south, west, east) that does not contain a rock and is not outside of the grid.
 
  For example, given N = 1, the halfling needs 8 steps to move from cell (2, 1) to cell (3, 4):
-
-
 
  Write a function:
 
@@ -27,11 +21,7 @@
 
  Given N = 2, A = 2, B = 5, C = 6 and D = 6 the function should return 7:
 
-
-
  Given N = 3, A = 6, B = 6, C = 10 and D = 13 the function should return 39:
-
-
 
  Assume that:
 

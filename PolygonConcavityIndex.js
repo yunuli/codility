@@ -56,8 +56,6 @@
  A[6].x = -1  A[6].y =  2
  the function should return either 2 or 6. These are the indices of the polygon lying strictly in its convex hull (that is, not on the convex hull border).
 
-
-
  Assume that:
 
  N is an integer within the range [3..10,000];
