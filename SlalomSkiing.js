@@ -61,6 +61,12 @@ function showSlalom(A){
     for(let i = 0; i < A.length; i++){
         console.log(s.slice(0, A[i]-1) + '*' + s.slice(A[i]-1));
     }
+    let a = new Array(A.length);
+    for(let i = 0; i < A.length; i++){
+        a[A[i]-1] =i+1;
+    }
+    console.log('A horizontal: ', a);
+
 }
 
 function randomGenerator(){
@@ -74,7 +80,10 @@ function randomGenerator(){
 
 function solution(A, mt) {
     showSlalom(A);
-    let len = A.length, maxTurns = mt || 2, turn = 0, max = 1, sum = new Array(len);
+    console.log(A);
+console.log('--------------');
+
+    let len = A.length, maxTurns = mt != undefined ? mt : 2, turn = 0, max = 0, sum = new Array(len);
 
     function init() {
         for (let i = 0; i < len; i++) {
@@ -99,7 +108,7 @@ function solution(A, mt) {
             if (findPrev(curPosition, A[upperHeight])) {
                 if (sum[upperHeight] >= sum[curHeight]) {
                     sum[curHeight] = sum[upperHeight] + 1;
-                    if(sum[curHeight] > max) max = sum[curHeight];
+
                 }
             }
         }
@@ -119,7 +128,9 @@ function solution(A, mt) {
             console.log(sum);
             turn++;
         }
-
+        for(let i = 0; i < len; i++){
+            if(sum[i] > max) max = sum[i];
+        }
         return max;
     }
 
@@ -128,13 +139,14 @@ function solution(A, mt) {
 
 let testcases = [
     [randomGenerator()],
-    // [[7, 5, 3], 1],//2
-    // [[1, 5, 3], 1],//3
-    // [[1, 2, 3, 4, 5, 6, 7]],//7
-    // [[15, 13, 5, 7, 4, 10, 12, 8, 2, 11, 6, 9, 3]],//8
-    // [[7, 6, 5, 4, 3, 2, 1]],//7
-    // [[7]],//1
-    // [[1, 5]]//2
+    [[7, 5, 3], 0],//2
+    [[7, 5, 3], 1],//3
+    [[1, 5, 3], 1],//3
+    [[1, 2, 3, 4, 5, 6, 7]],//7
+    [[15, 13, 5, 7, 4, 10, 12, 8, 2, 11, 6, 9, 3]],//8
+    [[7, 6, 5, 4, 3, 2, 1]],//7
+    [[7]],//1
+    [[1, 5]]//2
 ];
 tester.run(solution, testcases);
 
