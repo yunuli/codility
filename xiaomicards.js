@@ -7,32 +7,37 @@ let tf = require("./testFrame");
 
 //random
 
+function simulate(n){
 
+    let originalCard = Array(n), finalCards = Array(n), leftCards = n;
 
-function solution(A, x) {
-    return bisearch(A, 0, A.length - 1, x);
+    for(let i = 0; i < n; i++){
+        originalCard[i] = i;
+    }
+
+    while(leftCards > 0){
+        finalCards[--leftCards] = originalCard.shift();
+        originalCard.push(originalCard.shift());
+    }
+
+    for(let i = 1; i<= n; i++){
+        originalCard[finalCards[i - 1]] = i;
+    }
+    return originalCard;
+
+}
+
+function solution(n) {
+    return simulate(n);
 }
 
 let testcases = [
-    [[0], 0],
-    [[0], -1],
-    [[0], 1],
-    [[0, 2], 0],
-    [[0, 2], 2],
-    [[0, 2], 1],
-    [[0, 2], -1],
-    [[0, 2], 3],
-    [[0, 1, 1, 1, 1, 1, 1 ,1], 1],
-    [[1, 1, 1 ,1 ,1 ,1 ,1 ,1], 1],
-    [[1, 1,1 ,1 ,1 ,1 ,1 ,1 ,1], 1],
-    [[1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 1],
-    [[1, 1,2, 3, 4, 5, 6, 7, 8, 9, 10], 1],
-    [[1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 10],
-    [[1, 2, 3, 4, 5, 6, 7, 8, 9, 10,10], 10],
-    [[1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 8],
-    [[1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 4.5],
-    [[1, 3, 3, 3, 3, 4, 4, 4, 4, 4, 20], 3],
-    [[1, 3, 3, 3, 3, 4, 4, 4, 4, 4, 20], 5],
-    [[1, 1, 2, 4, 6, 8, 10, 10], 5]
+    [3],
+    [4],
+    [5],
+    [7],
+    [8],
+    [16],
+    [17]
 ];
 tf.run(solution, testcases);
