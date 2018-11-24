@@ -1,12 +1,19 @@
-<HTML>
-<TITLE>Welcome!</TITLE>
-Hi
-<SCRIPT>
-    var pos=document.URL.indexOf("name=")+5;
-    document.write(document.URL.substring(pos,document.URL.length));
-</SCRIPT>
-<BR>
-<div id="a"></div>
-Welcome to our system
-…
-</HTML>
+<input id="input"/>
+<script>
+    const data = {};
+    const input = document.getElementById('input');
+    let setter = new Proxy(data, {
+        set: function(obj, prop, newValue){
+            if(prop === 'text'){
+                input.value = newValue;
+            }
+
+            obj[prop] = newValue;
+        }
+    });
+    input.onchange = function (e) {
+        console.log('change');
+
+        setter.text = e.target.value;
+    }
+</script>

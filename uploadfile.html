@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>upload</title>
+</head>
+<body>
+
+<input id="file" type="file"/>
+<button id="upload">upload</button>
+</body>
+<script type="text/javascript">
+    const uploadButton = document.getElementById('upload');
+    uploadButton.addEventListener('click', () => {
+        const fileInput = document.getElementById('file');
+        const  file = fileInput.files[0];
+        const formData = new FormData();
+        formData.append('file',file);
+
+        fetch({
+            url :'upload',
+            method: 'POST',
+            data: formData
+        }).then((result) => {
+            console.log('upload success');
+
+            console.log(result);
+
+        }).catch((e) =>{
+            console.log('something went wrong');
+
+            console.log(e);
+        })
+
+
+    })
+</script>
+</html>

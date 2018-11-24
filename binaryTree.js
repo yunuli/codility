@@ -140,7 +140,6 @@ function* range(start, end, step = 1) {
     }
 }
 
-
 +function run() {
     const tree = [0, , 2, 3, , 5, 6, 7];
     // const tree = [...range(7)];

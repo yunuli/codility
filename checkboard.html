@@ -1,0 +1,79 @@
+
+<!--九宫格棋盘， hover变红-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style type="text/css">
+        body {
+            padding: 50px;
+        }
+
+        section {
+            position: relative;
+            float: left;
+            clear: left;
+
+        }
+
+        .col1 {
+            left: 0;
+        }
+
+        .col2 {
+            left: -5px;
+        }
+
+        .col3 {
+            left: -10px;
+        }
+
+        #line2 {
+            top: -5px;
+        }
+
+        #line3 {
+            top: -10px;
+        }
+
+        div {
+
+            text-align: center;
+            position: relative;
+            border: 5px blue solid;
+            width: 50px;
+            height: 50px;
+            float: left;
+            display: flex;
+            justify-content: center;
+            /*内容垂直居中*/
+            align-items: center;
+        }
+
+        div:hover {
+            border-color: red;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+<section id="line1">
+    <div class="col1">1</div>
+    <div class="col2">2</div>
+    <div class="col3">3</div>
+</section>
+<section id="line2">
+    <div class="col1">4</div>
+    <div class="col2">5</div>
+    <div class="col3">6</div>
+</section>
+<section id="line3">
+    <div class="col1">7</div>
+    <div class="col2">8</div>
+    <div class="col3">9</div>
+</section>
+</body>
+</html>

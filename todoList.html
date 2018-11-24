@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        html, body {
+            height:100%;
+            margin:0;
+            parding:0;
+            position: relative;
+            /*height: 100%;*/
+            /*width:100%;*/
+        }
+
+        body {
+
+            /*background: url("images/bg.png") no-repeat scroll;*/
+        }
+
+        #background {
+            position:absolute;
+            height: 100%;
+            width: 100%;
+            top: 0;
+            left:0;
+            z-index: -10;
+        }
+
+        #dialog {
+            padding: 50px;
+            background-color: white;
+            width: 200px;
+            height: 200px;
+            border-radius: 10px;
+            float: right;
+            margin-top: 200px;
+            margin-right: 200px;
+        }
+
+        #pwd {
+            border-radius: 5px;
+            border: 1px black solid;
+        }
+    </style>
+</head>
+<body>
+<img id="background" src="images/bg.png" >
+<div id="main">
+
+    <form id="dialog">
+        <img src="">
+        <input id="username" type="text"/>
+        <br/>
+        <input id="pwd" type="password"/>
+        <br/>
+        <input type="checkbox"> 不要显示密码
+
+    </form>
+</div>
+</body>
+</html>
