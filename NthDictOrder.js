@@ -42,6 +42,7 @@ function solutionDfsNoRecur({max, rank}) {
 }
 
 function solutionOutOfTime(inputs) {
+    //bfs search
     console.log(inputs);
     let len = 10, upperbound = inputs.max, nth = inputs.rank, count = 0, nthValue = 0, queue = [];
 
@@ -74,13 +75,82 @@ function solutionOutOfTime(inputs) {
 
 }
 
-function solution({max, rank}) {
+function solution1({max, rank}) {
+    let count = 0;
+
+    function solve(n, m) {
+        let ans = 1;
+        while (m !== 0) {
+            let cnt = getCntOfPre(ans, n);
+            if (cnt >= m) {
+                m--;
+                if (m === 0)
+                    break;
+                ans *= 10;
+            } else {
+                m -= cnt;
+                ans++;
+            }
+        }
+        return ans;
+    }
+
+    function getCntOfPre(pre, n) {
+        let cnt = 1;
+        let p = 10;
+        for (; pre * p <= n; p *= 10) {
+            count++;
+            if (pre * p - 1 + p <= n)
+                cnt += p;
+            else
+                cnt += n - pre * p + 1;
+
+//          cnt += Math.min(n, pre * p - 1 + p) - pre * p + 1;
+        }
+        return cnt;
+    }
+
+    let a = solve(max, rank);
+    console.log(count);
+}
+
+function solution2({max, rank}) {
+
+    let n = max, m = rank, i = 1;
+    m--;
+    let count = 0;
+    while (m !== 0) {
+        let start = i, end = i + 1, num = 0;
+        while (start <= n) {
+            count++;
+            num += Math.min(n + 1, end) - start;
+            start *= 10;
+            end *= 10;
+            console.log(start,end, num);
+        }
+        if (num > m) {
+            i *= 10;
+            m--;
+        }else{
+            m -= num;
+            i++;
+        }
+
+    }
+    console.log(count);
+
+    return i;
+
+
+}
+
+function mySolution({max, rank}) {
     if (isNaN(Number(max)) || isNaN(Number(rank)))
         throw TypeError('must be number');
     if (!max || max < rank)
         throw RangeError('max must not be less than rank');
 
-    let boundaryArray = [], result = [], dim = 10, totalNodes = max;
+    let boundaryArray = [], result = 0, dim = 10, totalNodes = max;
 
     while (max > 0) {
         boundaryArray.push(max % 10);
@@ -89,7 +159,7 @@ function solution({max, rank}) {
 
     boundaryArray = boundaryArray.reverse();
 
-    let maxDepth = boundaryArray.length, currentLayer = 0;
+    let maxDepth = boundaryArray.length;
 
     rank += Number('1'.repeat(maxDepth));
     totalNodes += Number('1'.repeat(maxDepth));
@@ -102,53 +172,52 @@ function solution({max, rank}) {
         } else {
             rightDepth = leftDepth - 1;
         }
-        let currentBoundary = boundaryArray[currentLayer];
+
         const leftNodes = Number('1'.repeat(leftDepth)), rightNodes = Number('1'.repeat(rightDepth));
-        const nodesOnBoundary =
+        const nodesOfBoundary =
             totalNodes
-            - currentBoundary * leftNodes
-            - (dim - currentBoundary - 1) * rightNodes;
+            - boundaryArray[0] * leftNodes
+            - (dim - boundaryArray[0] - 1) * rightNodes;
 
         let index = Math.ceil(rank / leftNodes) - 1;
 
-        if (index < currentBoundary) {
+        if (index < boundaryArray[0]) {
             rank -= index * leftNodes;
             totalNodes = leftNodes;
             boundaryArray = boundaryArray.map(n => 9);
         } else {
-            if ((index * leftNodes + nodesOnBoundary) >= rank) {
-                index = currentBoundary;
+            if ((index * leftNodes + nodesOfBoundary) >= rank) {
+                index = boundaryArray[0];
             } else {
                 index = dim - 1 - Math.floor((totalNodes - rank) / rightNodes);
             }
-            if (index === currentBoundary) {
-                totalNodes = nodesOnBoundary;
+            if (index === boundaryArray[0]) {
+                totalNodes = nodesOfBoundary;
                 rank -= index * leftNodes;
             } else {
-                maxDepth--;
+                maxDepth = rightDepth;
                 totalNodes = rightNodes;
-                rank = rank - currentBoundary * leftNodes - nodesOnBoundary - (index - currentBoundary - 1) * rightNodes;
+                rank = rank - boundaryArray[0] * leftNodes - nodesOfBoundary - (index - boundaryArray[0] - 1) * rightNodes;
                 boundaryArray = boundaryArray.map(n => 9);
             }
         }
 
 
-        result.push(index);
+        result = result * 10 + index;
+        boundaryArray.shift();
         if (rank === 1) return result;
         totalNodes--;
-        currentLayer++;
         maxDepth--;
         rank--;
     }
-
-
 }
 
 let testcases = [
     // [{max: 'a', rank: 'b'}],
     // [{max: 4, rank: 5}],
+    [{max: 19, rank: 11}],//19
     [{max: 1000, rank: 99}],//187
-    [{max: 1000, rank: 1000}],//187
+    [{max: 1000, rank: 1000}],//999
     [{max: 11, rank: 2}],//10
     [{max: 11, rank: 4}],//2
     [{max: 200, rank: 25}],//120
@@ -162,13 +231,13 @@ let testcases = [
     [{max: 1000000, rank: 999999}],//999998
     [{max: 10000000, rank: 999999}],//189997
     [{max: 1000000000, rank: 99999999}],//18999997
-    [{max: 1000000000, rank: 1000000000}]//18999997
+    [{max: 1000000000, rank: 1000000000}]//999999999
 ];
 //answer
 //2
 //19
 
-tf.run(solution, testcases);
+tf.run(solution2, testcases);
 
 //5 2 3
 // 3 1 2 3
