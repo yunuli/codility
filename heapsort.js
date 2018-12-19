@@ -12,7 +12,7 @@ let tester = require('./testFrame');
 function heapify(A, root, len) {
     let currentNode = root;
 
-    while (currentNode < len && A[currentNode]) {
+    while (currentNode < len) {
         let leftChild = currentNode * 2 + 1, rightChild = currentNode * 2 + 2;
         if (rightChild < len && A[rightChild] > A[currentNode]) {
             currentNode = rightChild;
