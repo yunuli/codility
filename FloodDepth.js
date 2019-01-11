@@ -49,6 +49,47 @@
  Elements of input arrays can be modified.
  **/
 
+
+/*
+case 1:
+L
+*
+ *     R
+  *   *
+   * *
+    *
+    min
+
+case 2:
+        R
+        *
+  L    *
+  *   *
+   * *
+    *
+    min
+
+case 3: L > R > M
+L
+*             R
+ *      M     *
+  *     *    *
+   *   *  * *
+    * *    *
+     *    min2
+   min1
+
+
+case 4: L > M > R
+L
+*
+ *    M
+  *   *
+   * * *    R
+    *   *   *
+         * *
+          *
+ */
 let tester = require('./testFrame');
 
 function Stack() {
@@ -71,7 +112,7 @@ function Stack() {
     this.isNotEmpty = function () {
         return stk.length !== 0;
     };
-    this.display = function (){
+    this.display = function () {
         console.log(stk);
     }
 }
@@ -109,18 +150,99 @@ function solution(A) {
 
 }
 
+function findPeak(A, n) {
+    let current = n, next = n + 1, len = A.length;
+
+    while (next < len && A[current] <= A[next]) {
+        current++;
+        next++
+    }
+    return current;
+}
+
+function findBottom(A, n) {
+    let current = n, next = n + 1, len = A.length;
+
+    while (next < len && A[current] >= A[next]) {
+        current++;
+        next++
+    }
+    return current;
+}
+
+function solution2(A) {
+    let len = A.length, peaks = [], current, maxDepth = 0;
+    current = findPeak(A, 0);
+    let lowestPoint = A[current];
+    peaks.push(A[current]);
+
+    while (current < len) {
+        let bottom = findBottom(A, current);
+        lowestPoint = lowestPoint > A[bottom] ? A[bottom] : lowestPoint;
+        let peakIndex = findPeak(A, bottom);
+
+        let rightMostPeak = A[peakIndex], peaksTop = peaks[peaks.length - 1];
+
+        while (peaks.length > 0 && rightMostPeak > peaksTop) {
+            peaksTop = peaks.pop();
+        }
+
+        let lowerEdge = rightMostPeak < peaksTop ? rightMostPeak : peaksTop;
+        maxDepth = lowerEdge - lowestPoint > maxDepth ? lowerEdge - lowestPoint : maxDepth;
+
+        if (peaks.length === 0) {
+            lowestPoint = rightMostPeak;
+            peaks.push(rightMostPeak)
+        }
+
+        current = peakIndex + 1;
+
+    }
+    return maxDepth;
+
+}
+
+function solution3(A) {
+    let len = A.length, scanFrom = 1, maxDepth = 0, leftMostPeakHeight = A[0], lowestPoint = leftMostPeakHeight;
+
+    while (scanFrom < len) {
+
+        //find next bottom
+        while (scanFrom < len && A[scanFrom - 1] >= A[scanFrom]) {
+            scanFrom++;
+        }
+        lowestPoint = lowestPoint > A[scanFrom - 1] ? A[scanFrom - 1] : lowestPoint;
+
+        //find next peak
+        while (scanFrom< len && A[scanFrom - 1] <= A[scanFrom]) {
+            scanFrom++;
+        }
+        const nextPeakHeight = A[scanFrom - 1];
+
+        const lowerEdge = nextPeakHeight > leftMostPeakHeight ? leftMostPeakHeight : nextPeakHeight;
+        maxDepth = maxDepth > lowerEdge - lowestPoint ? maxDepth : lowerEdge - lowestPoint;
+
+        if (leftMostPeakHeight === lowerEdge) {
+            lowestPoint = leftMostPeakHeight = nextPeakHeight;
+        }
+    }
+    return maxDepth;
+}
+
+
 let testcases = [
-    [[1,3,2,1,2,1,5,3,3,4,2]],//2
-    [[50,9,8,7,6,7,8,9,1,6]],//5
-    [[11,9,8,7,6,7,20,9,1,6]],//5
-    [[11,9,8,7,6,7,20,9,1,30]],//19
-    [[50,9,8,7,6,7,8,9,1,6,20]],//19
-    [[50,9,8,7,6,7,8,9,1,6]],//5
-    [[10,9,8,7,6,7,8,9]],//3
-    [[5,10,9,8,7,6,7,8,9,8]],//3
-    [[10,9,8,7,6]],//0
-    [[6,7,8,9]],//0
-    [[6,7,8,9,8,7]],//0
-    [[6,6,6,6,6]]//0
+    [[6, 7, 8, 9]],//0
+    [[1, 3, 2, 1, 2, 1, 5, 3, 3, 4, 2]],//2
+    [[50, 9, 8, 7, 6, 7, 8, 9, 1, 6]],//5
+    [[11, 9, 8, 7, 6, 7, 20, 9, 1, 6]],//5
+    [[11, 9, 8, 7, 6, 7, 20, 9, 1, 30]],//19
+    [[50, 9, 8, 7, 6, 7, 8, 9, 1, 6, 20]],//19
+    [[50, 9, 8, 7, 6, 7, 8, 9, 1, 6]],//5
+    [[10, 9, 8, 7, 6, 7, 8, 9]],//3
+    [[5, 10, 9, 8, 7, 6, 7, 8, 9, 8]],//3
+    [[10, 9, 8, 7, 6]],//0
+    [[6, 7, 8, 9]],//0
+    [[6, 7, 8, 9, 8, 7]],//0
+    [[6, 6, 6, 6, 6]]//0
 ];
-tester.run(solution, testcases);
+tester.run(solution3, testcases);
