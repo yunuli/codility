@@ -214,7 +214,7 @@ function solution3(A) {
         lowestPoint = lowestPoint > A[scanFrom - 1] ? A[scanFrom - 1] : lowestPoint;
 
         //find next peak
-        while (scanFrom< len && A[scanFrom - 1] <= A[scanFrom]) {
+        while (scanFrom < len && A[scanFrom - 1] <= A[scanFrom]) {
             scanFrom++;
         }
         const nextPeakHeight = A[scanFrom - 1];
@@ -228,7 +228,21 @@ function solution3(A) {
     }
     return maxDepth;
 }
-
+//https://codesays.com/2016/solution-to-flood-depth-by-codility/
+function solution4(A) {
+    let minHeight = 0, maxHeight = 0, maxDepth = 0;
+    for(let h of A){
+        if(h > maxHeight){
+            maxDepth = (maxDepth < maxHeight - minHeight) ? maxHeight - minHeight : maxDepth;
+            minHeight = maxHeight = h;
+        }else if(h < minHeight){
+            minHeight = h;
+        } else{
+            maxDepth = (maxDepth < h - minHeight) ? h - minHeight : maxDepth;
+        }
+    }
+    return maxDepth;
+}
 
 let testcases = [
     [[6, 7, 8, 9]],//0
@@ -245,4 +259,4 @@ let testcases = [
     [[6, 7, 8, 9, 8, 7]],//0
     [[6, 6, 6, 6, 6]]//0
 ];
-tester.run(solution3, testcases);
+tester.run(solution4, testcases);
