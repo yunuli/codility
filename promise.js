@@ -45,6 +45,7 @@ class Promise {
 
     _resolve(value) {
         if (this._status !== PENDING) return;
+        this._status = FULFILLED;
         this._value = value;
         setTimeout(() => {
             let handler;
@@ -57,6 +58,7 @@ class Promise {
 
     _reject(error) {
         if (this._status !== PENDING) return;
+        this._status = REJECTED;
         this._value = error;
         setTimeout(() => {
             let handler;
@@ -75,7 +77,7 @@ class Promise {
                     if (onSuccess instanceof Promise) {
                         return onSuccess.then(nResolve, nReject);
                     }
-                    typeof onSuccess !== 'function' ? nResolve(value) : nResolve(onSuccess(value));
+                    typeof onSuccess === 'function' ?  nResolve(onSuccess(value)) : nResolve(value);
                 } catch (e) {
                     nReject(e);
                 }
@@ -87,23 +89,23 @@ class Promise {
                     if (onFailed instanceof Promise) {
                         return onFailed.then(nResolve, nReject);
                     }
-                    typeof onFailed !== 'function' ? nResolve(error) : nResolve(onFailed(error));
+                    typeof onFailed === 'function' ? nResolve(onFailed(error)) : nResolve(error);
                 } catch (e) {
                     nReject(e);
                 }
             };
 
-            if (this._status === FULFILLED) {
-                success(this._value)
-            }
-
-            if (this._status === REJECTED) {
-                failed(this._value);
-            }
-
-            if (this._status === PENDING) {
-                this._successHandlers.push(success);
-                this._failureHandlers.push(failed);
+            switch(this._status) {
+                case FULFILLED:
+                    success(this._value);
+                    break;
+                case REJECTED:
+                    failed(this._status);
+                    break;
+                case PENDING:
+                    this._successHandlers.push(success);
+                    this._failureHandlers.push(failed);
+                    break;
             }
         });
     }

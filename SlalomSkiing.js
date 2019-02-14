@@ -83,7 +83,7 @@ function solution(A, mt) {
     console.log(A);
 console.log('--------------');
 
-    let len = A.length, maxTurns = mt != undefined ? mt : 2, turn = 0, max = 0, sum = new Array(len);
+    let len = A.length, maxTurns = mt !== undefined ? mt : 2, turn = 0, max = 0, sum = new Array(len);
 
     function init() {
         for (let i = 0; i < len; i++) {
