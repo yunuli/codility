@@ -1,0 +1,25 @@
+{
+  "name": "codility",
+  "version": "1.0.0",
+  "description": "",
+  "main": "''",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yunuli/codility.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yunuli/codility/issues"
+  },
+  "homepage": "https://github.com/yunuli/codility#readme",
+  "devDependencies": {
+    "jest": "^23.6.0"
+  },
+  "dependencies": {
+    "yarn": "^1.13.0"
+  }
+}

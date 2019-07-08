@@ -1,3 +1,5 @@
+
+// renturn number of distinct square value
 let testcases = [
     [-10, -10, -8, -4, -2,
         -1, -1, 0, 1, 1,
