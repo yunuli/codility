@@ -5,7 +5,7 @@ B说我也不知道是多少
 这时A说我知道了
 B也说那我也知道了
 求 x,y
- */
+*/
 
 function* range(start, end) {
     if (!end) {
@@ -56,6 +56,7 @@ for (let sumPairArray of sumMap.values()) {
             candidates.push(sumPair)
         }
     }
+
     //product可有多种分解方法的只能有一种，否则A猜不出来
     if (candidates.length !== 1) continue;
 

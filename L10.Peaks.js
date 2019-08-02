@@ -27,7 +27,7 @@ function solution(A) {
     // console.log(mingap,sum,peaks);
     let sqrtN = Math.floor(Math.sqrt(len)), count = 0;
     for(let step = 3; step <= len; step++){
-        if(len % step == 0){
+        if(len % step === 0){
             let i = step;
             for(;i <= len && sum[i]>sum[i-step]; i+=step){
                  // console.log(step,i,sum[i],sum[i-step]);
