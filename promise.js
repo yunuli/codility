@@ -6,10 +6,11 @@
 
 
 promise的构造函数接受一个函数
-functionn(resolve,reject)为参数
+executor(resolve,reject)为参数
  该函数接受两个函数为参数，并且会立即执行。
  在函数中调用resolve函数时，会将promise从pending改变为fullfilled
  在函数中调用reject函数时，会将promise从pending改变为rejected
+ 如果executor中抛出异常则promise的状态变为reject，其值为异常值
 
  promise的值为resolve或reject函数的入参
 
@@ -40,7 +41,11 @@ class Promise {
         this._status = PENDING;
         this._successHandlers = [];
         this._failureHandlers = [];
-        executor(this._resolve.bind(this), this._reject.bind(this));
+        try {
+            executor(this._resolve.bind(this), this._reject.bind(this));
+        } catch (e) {
+            this._reject(e)
+        }
     }
 
     _resolve(value) {
@@ -56,14 +61,14 @@ class Promise {
 
     }
 
-    _reject(error) {
+    _reject(reason) {
         if (this._status !== PENDING) return;
         this._status = REJECTED;
-        this._value = error;
+        this._value = reason;
         setTimeout(() => {
             let handler;
             while (handler = this._failureHandlers.shift()) {
-                handler(error);
+                handler(reason);
             }
         }, 0);
     }
@@ -74,10 +79,10 @@ class Promise {
 
             const success = (value) => {
                 try {
-                    if (onSuccess instanceof Promise) {
-                        return onSuccess.then(nResolve, nReject);
+                    if (value instanceof Promise) {
+                        return value.then(nResolve, nReject);
                     }
-                    typeof onSuccess === 'function' ?  nResolve(onSuccess(value)) : nResolve(value);
+                    typeof onSuccess === 'function' ? nResolve(onSuccess(value)) : nResolve(value);
                 } catch (e) {
                     nReject(e);
                 }
@@ -95,7 +100,7 @@ class Promise {
                 }
             };
 
-            switch(this._status) {
+            switch (this._status) {
                 case FULFILLED:
                     success(this._value);
                     break;
