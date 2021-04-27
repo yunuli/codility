@@ -1,0 +1,78 @@
+{
+  "setSite": {
+    "apiFreq": false,
+    "siteCanReward": false,
+    "siteAuthorScale": false,
+    "usernameBout": false,
+    "miniprogramVideo": false
+  },
+  "passport": {
+    "offiaccountAppId": false,
+    "offiaccountAppSecret": false,
+    "offiaccountServerConfigToken": false,
+    "miniprogramAppId": false,
+    "miniprogramAppSecret": false,
+    "oplatformAppId": false,
+    "oplatformAppSecret": false,
+    "oplatformUrl": false,
+    "oplatformAppToken": false,
+    "oplatformAppAesKey": false
+  },
+  "paycenter": {
+    "mchId": false,
+    "appId": false,
+    "apiKey": false,
+    "appSecret": false,
+    "wxpayMchId": false,
+    "wxpayAppId": false,
+    "wxpayApiKey": false,
+    "wxpayAppSecret": false
+  },
+  "qcloud": {
+    "qcloudCaptchaAppId": false,
+    "qcloudSecretId": false,
+    "qcloudSecretKey": false,
+    "qcloudToken": false,
+    "qcloudCaptchaSecretKey": false,
+    "qcloudCmsImage": false,
+    "qcloudCmsText": false,
+    "qcloudFaceidRegion": false,
+    "qcloudSmsAppId": false,
+    "qcloudSmsAppKey": false,
+    "qcloudSmsTemplateId": false,
+    "qcloudSmsSign": false,
+    "qcloudCosBucketName": false,
+    "qcloudCosBucketArea": false,
+    "qcloudCosCdnUrl": false,
+    "qcloudCosSignUrl": false,
+    "qcloudVodTranscode": false,
+    "qcloudVodCoverTemplate": false,
+    "qcloudVodUrlKey": false,
+    "qcloudVodUrlExpire": false,
+    "qcloudVodTaskflowGif": false
+  },
+  "setCash": {
+    "cashIntervalTime": false,
+    "cashMaxSum": false,
+    "cashSumLimit": false
+  },
+  "other": {
+    "canCreateThreadAnonymous": false,
+    "canCreateThreadLongAnonymous": false,
+    "canCreateThreadVideoAnonymous": false,
+    "canCreateThreadImageAnonymous": false,
+    "canCreateThreadAudioAnonymous": false,
+    "canCreateThreadQuestionAnonymous": false,
+    "canCreateThreadGoodsAnonymous": false
+  },
+  "lbs": {
+    "qqLbsKey": false
+  },
+  "ucenter": {
+    "ucenterUrl": false,
+    "ucenterKey": false,
+    "ucenterAppid": false
+  },
+  "user": false,
+  "watermark": false
+}

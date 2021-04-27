@@ -1,96 +1,37 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>MVVM</title>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+
+        #f {
+            display: flex;
+            /*flex-direction: column;*/
+            justify-content: space-between;
+        }
+
+        #f div {
+            width: 100px;
+            height: 100px;
+        }
+
+        div {
+            border: 1px solid black;
+        }
+        #f2 {
+            align-items: flex-start;
+        }
+    </style>
 </head>
 <body>
-<script>
-
-    function Vue(options) {
-        let el = this.$el = document.querySelector(options.el);
-        this.$data = options.data;
-        this.htmlTemplate = this.$el.innerHTML;
-        let that = this;
-        this.updateView();
-        this.bindEvents();
-
-        function onChange(e) {
-            const attr = e.target.getAttribute('v-model');
-            if (attr) $data[attr] = e.target.value;
-        }
-
-        // const vmodels = document.querySelectorAll('[v-model]');
-        document.body.addEventListener('change', onChange);
-
-        let $data = new Proxy(this.$data, {
-            get: (target, property, receiver) => {
-                return Reflect.get(target, property);
-            },
-            set: (target, property, value, receiver) => {
-                const v = Reflect.get(target, property);
-                if (v === value) {
-                    return;
-                }
-                Reflect.set(target, property, value);
-                this.updateView();
-                const vmodels = this.$el.querySelectorAll(`[v-model=${property}]`);
-                vmodels && vmodels.forEach(vm => vm.value = value);
-            }
-        })
-    }
-
-    Vue.prototype.bindEvents = function () {
-        const onRe = /^@|^v-on:/;
-
-        function dfs() {
-            for (let child of this.$el.children) {
-                for(let attr of child.attributes){
-                    if(onRe.test(attr)){
-
-                    }
-                    }
-                dfs(child);
-            }
-        }
-    };
-
-    Vue.prototype.updateView = function () {
-        this.$el.innerHTML = this.htmlTemplate.replace(/{{([^{^}]+)}}/g, (match, $1) => {
-            //todo eliminate with statement
-            let f = new Function('data', `with(data){return ${$1}}`);
-            console.log(f);
-            return f(this.$data);
-        })
-    }
-
-</script>
-<div id="msg">
-    {{b.c}}这是普通文本{{b.c+1+message}}这是普通文本
-    <p>{{message}}</p>
-
-    <p><input type="text" v-model="message"/></p>
-    <p>{{message}}</p>
-    <p>
-        <button type="button" v-on:click="clickBtn(message)">click me</button>
-    </p>
+<div id="f">
+    <div></div>
+    <div id="f2"></div>
+    <div></div>
 </div>
-<script>
-    let vm = new Vue({
-        el: "#msg",
-        data: {
-            b: {
-                c: 1
-            },
-            message: "hello world"
-        },
-        methods: {
-            clickBtn: function (message) {
-                vm.message = "clicked";
-            }
-        }
-    });
-
-</script>
 </body>
 </html>
