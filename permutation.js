@@ -52,8 +52,8 @@ function getIndex(perm) {
 
 function getPerm(index, dim) {
     let k = 1, m, perm = Array(dim);
-    for(let i = dim - 1; i>=0; i--){
-        console.log(index, dim-i);
+    for (let i = dim - 1; i >= 0; i--) {
+        console.log(index, dim - i);
         perm[i] = index % (dim - i);
         index = Math.floor(index / (dim - i));
     }
@@ -66,12 +66,12 @@ function getPerm(index, dim) {
     // }
     console.log(perm);
 
-    for(let i = dim - 1; i >0; i--){
-       for(let j = i - 1; j >=0; j --){
-           if(perm[j] <= perm[i]){
-               perm[i]++;
-           }
-       }
+    for (let i = dim - 1; i > 0; i--) {
+        for (let j = i - 1; j >= 0; j--) {
+            if (perm[j] <= perm[i]) {
+                perm[i]++;
+            }
+        }
     }
 
 }
@@ -86,10 +86,38 @@ function solution_next_perm(perm) {
     return next_perm(perm);
 }
 
+function permuteUnique(arr, start) {
+    if (start === arr.length) {
+        console.log(arr)
+        return
+    }
+
+    // permuteUnique(arr, start + 1);
+    let visited = {}
+    for (let i = start; i < arr.length; i++) {
+
+        // console.log(start,i,arr)
+        if (start !== i && visited[arr[i]] === true) {
+            continue
+        }
+        visited[arr[i]] = true;
+        [arr[i], arr[start]] = [arr[start], arr[i]]
+        permuteUnique(arr, start + 1);
+        [arr[i], arr[start]] = [arr[start], arr[i]]
+    }
+
+}
+
 let testcases_perm = [
     [[1, 2, 3]],
-    [[1, 2, 3, 4, 5]],
-    [[1, 2, 3, 4, 5, 6]],
+    [[1, 1, 3]],
+    [[2, 2, 1, 1]],
+    [[1, 1, 2, 2]],
+    [[1, 1, 1]],
+
+    // [[1, 2, 3, 4, 5]],
+    // [[1, 2, 3, 4, 5, 6]],
+    // [[1, 2, 1, 4, 2, 6]],
 ];
 let testcases_next_perm = [
     [[1]],//false
@@ -125,4 +153,4 @@ let testcases_get_perm = [
 // tf.run(solution_perm, testcases_perm);
 // tf.run(solution_next_perm, testcases_next_perm);
 // tf.run(getIndex, testcases_get_index);
-tf.run(getPerm, testcases_get_perm);
+tf.run(permuteUnique, testcases_perm, 0);
