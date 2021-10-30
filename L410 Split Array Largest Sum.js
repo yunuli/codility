@@ -42,15 +42,15 @@ function solution(nums, numOfGroups) {
 
     // console.log('prefix sum ', prefixSum)
     let resultMatrix = Array(nums.length + 1).fill(0);
-    resultMatrix = resultMatrix.map(() =>
-        Array(nums.length + 1).fill(0)
-    )
+    // resultMatrix = resultMatrix.map(() =>
+    //     Array(nums.length + 1).fill(0)
+    // )
 
-    for (let i = 0; i < lengthOfNums + 1; i++) {
-        for (let j = i; j < lengthOfNums + 1; j++) {
-            // console.log(i, j, prefixSum[j] - prefixSum[i], resultMatrix)
-            resultMatrix[i][j] = prefixSum[j] - prefixSum[i];
-        }
+    for (let i = 0; i <= lengthOfNums; i++) {
+        // for (let j = i; j < lengthOfNums + 1; j++) {
+        // console.log(i, j, prefixSum[j] - prefixSum[i], resultMatrix)
+        resultMatrix[i] = prefixSum[lengthOfNums] - prefixSum[i];
+        // }
     }
     // printMatrix(resultMatrix);
     // console.time('cal')
@@ -63,22 +63,22 @@ function solution(nums, numOfGroups) {
             // console.log('i=', i);
             // console.log(resultMatrix[0][lengthOfNums]);
             // for (let j = i + 1; j <= lengthOfNums; j++) {
-            for (let j = lengthOfNums; j <= lengthOfNums; j++) {
-                // console.log('j=', j);
-                for (let k = i + 1; k < j; k++
-                ) {
-                    // console.log('k=', k);
-                    // console.log('====================')
-                    // console.log('prefixsum:', prefixSum)
-                    // console.log('i j k:', i, j, k)
-                    // console.log('result:', resultMatrix[i][j])
-                    // console.log('mik:', prefixSum[k] - prefixSum[i])
-                    // console.log('mkj:', resultMatrix[k][j]);
-                    resultMatrix[i][j] = Math.min(resultMatrix[i][j], Math.max(prefixSum[k] - prefixSum[i], resultMatrix[k][j]))
-                    // printMatrix(resultMatrix);
-                }
-
+            // for (let j = lengthOfNums; j <= lengthOfNums; j++) {
+            // console.log('j=', j);
+            for (let k = i + 1; k <=lengthOfNums; k++
+            ) {
+                // console.log('k=', k);
+                // console.log('====================')
+                // console.log('prefixsum:', prefixSum)
+                // console.log('i j k:', i, j, k)
+                // console.log('result:', resultMatrix[i][j])
+                // console.log('mik:', prefixSum[k] - prefixSum[i])
+                // console.log('mkj:', resultMatrix[k][j]);
+                resultMatrix[i] = Math.min(resultMatrix[i], Math.max(prefixSum[k] - prefixSum[i], resultMatrix[k]))
+                // printMatrix(resultMatrix);
             }
+
+            // }
 
         }
         // console.log(count)
@@ -86,8 +86,9 @@ function solution(nums, numOfGroups) {
     }
     // console.log(count);
     // console.timeEnd('cal')
-    return resultMatrix[0][lengthOfNums]
+    return resultMatrix[0]
 }
+
 console.enableLog = true;
 
 function printMatrix(...args) {
