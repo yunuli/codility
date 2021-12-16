@@ -21,5 +21,6 @@ let oldLog = console.log;
 console.log = function (...args) {
     if (console.enableLog) oldLog(...args)
 }
+console.enableLog = true;
 
 exports.run = run;
