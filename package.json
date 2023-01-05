@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/yunuli/codility#readme",
   "devDependencies": {
-    "jest": "^23.6.0"
+    "jest": "^29.3.1"
   },
   "dependencies": {
     "yarn": "^1.13.0"
